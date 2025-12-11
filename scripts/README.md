@@ -82,6 +82,38 @@ Genera archivos diff para análisis detallado de cambios específicos.
 
 ---
 
+### 4. `generate_smali_patch.sh` ⭐ NUEVO
+Genera un parche unificado de TODOS los archivos smali modificados (no archivos nuevos).
+
+**Uso:**
+```bash
+./generate_smali_patch.sh <app_modificada> <app_original> [directorio_salida]
+```
+
+**Ejemplo:**
+```bash
+./generate_smali_patch.sh ../com_zhiliaoapp_musically_3 ../com_zhiliaoapp_musically_4
+```
+
+**Características:**
+- 🎯 Analiza solo archivos que fueron modificados (ignora archivos nuevos)
+- 📦 Genera un único archivo .patch con todos los cambios
+- 📊 Incluye estadísticas detalladas
+- ⚡ Optimizado para grandes volúmenes de archivos
+
+**Salida:**
+- `005-smali-modifications.patch` - Parche unificado completo
+- `smali-patch-stats.txt` - Estadísticas detalladas
+- `smali-modified-files.txt` - Lista de archivos modificados
+
+**Aplicar el parche:**
+```bash
+cd /path/to/app_original
+patch -p1 < patches/tiktok-v42.9.3/005-smali-modifications.patch
+```
+
+---
+
 ## 🔄 Flujo de Trabajo Completo
 
 ### Análisis y Extracción
@@ -89,16 +121,19 @@ Genera archivos diff para análisis detallado de cambios específicos.
 # 1. Generar diffs para análisis
 ./generate_diffs.sh ../com_zhiliaoapp_musically_3 ../com_zhiliaoapp_musically_4
 
-# 2. Extraer parches
+# 2. Generar parche unificado de smali (NUEVO)
+./generate_smali_patch.sh ../com_zhiliaoapp_musically_3 ../com_zhiliaoapp_musically_4
+
+# 3. Extraer parches de archivos nuevos
 ./extract_patches.sh ../com_zhiliaoapp_musically_3 ../tiktok_patches
 ```
 
 ### Aplicación de Parches
 ```bash
-# 3. Aplicar parches a app original
+# 4. Aplicar parches a app original
 ./patch_tiktok_42.9.3.sh ../com_zhiliaoapp_musically_4 ../tiktok_patched
 
-# 4. Recompilar
+# 5. Recompilar
 apktool b ../tiktok_patched -o tiktok_modified.apk
 
 # 5. Firmar
