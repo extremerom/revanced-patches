@@ -36,6 +36,23 @@ val playbackSpeedPatch = bytecodePatch(
                 )
             }
 
+            /**
+             * Strategy for Playback Speed persistence:
+             * 
+             * The setSpeed method (LJFF) has 4 parameters in v43.0.2:
+             * 1. enterFrom (String): Context like "home", "following"
+             * 2. aweme (Aweme): Current video model
+             * 3. speed (Float): The playback speed value
+             * 4. action (String): Trigger action - NEW parameter
+             * 
+             * For the action parameter, we pass an empty string since we don't
+             * have a specific action context when restoring speed. The method
+             * handles null/empty gracefully by skipping the action-specific logic.
+             * 
+             * Alternative considered: Pass null instead of "", but empty string
+             * is safer as it won't require null checks in the target method.
+             */
+            
             // By default, the playback speed will reset to 1.0 at the start of each video.
             // Instead, override it with the desired playback speed.
             onRenderFirstFrameFingerprint.method.addInstructions(
@@ -54,9 +71,12 @@ val playbackSpeedPatch = bytecodePatch(
                     invoke-static { }, Lapp/revanced/extension/tiktok/speed/PlaybackSpeedPatch;->getPlaybackSpeed()F
                     move-result v2
                     
-                    # Empty string for additional parameter in version 43.0.2+
+                    # Empty string for action parameter (4th param added in v43.0.2)
+                    # This parameter is used for tracking specific user actions that trigger speed changes.
+                    # Since we're programmatically restoring speed, we use an empty string.
                     const-string v3, ""
                     
+                    # Call setSpeed: LJFF(enterFrom, aweme, speed, action)
                     invoke-static { v0, v1, v2, v3 }, ${onVideoSwiped.originalMethod}
                 """,
             )
