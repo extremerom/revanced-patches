@@ -1,0 +1,7 @@
+--- apktool.yml.original
++++ apktool.yml.modified
+@@ -7,1 +7,1 @@
+ sdkInfo:
+-  minSdkVersion: 23
++  minSdkVersion: 26
+   targetSdkVersion: 35

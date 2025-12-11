@@ -1,0 +1,68 @@
+# Nuevas Clases Smali - TikTok v42.9.3 Mod
+
+## Paquete me.tigrik (Crash Handling System)
+
+### Clases Principales
+smali_classes34/me/tigrik/CrashActivity.smali
+smali_classes34/me/tigrik/CrashActivity$Close.smali
+smali_classes34/me/tigrik/CrashActivity$Share.smali
+smali_classes34/me/tigrik/KillAppReceiver.smali
+
+### Clases de Soporte - Paquete a
+smali_classes34/me/tigrik/a/a.smali
+
+### Clases de Soporte - Paquete b
+smali_classes34/me/tigrik/b/a.smali
+smali_classes34/me/tigrik/b/b.smali
+smali_classes34/me/tigrik/b/c.smali
+smali_classes34/me/tigrik/b/d.smali
+smali_classes34/me/tigrik/b/e.smali
+smali_classes34/me/tigrik/b/f.smali
+smali_classes34/me/tigrik/b/g.smali
+smali_classes34/me/tigrik/b/h.smali
+smali_classes34/me/tigrik/b/i.smali
+
+### Clases de Soporte - Paquete c
+smali_classes34/me/tigrik/c/a.smali
+
+### Clases de Soporte - Paquete d
+smali_classes34/me/tigrik/d/a.smali
+
+### Clases de Soporte - Paquete f
+smali_classes34/me/tigrik/f/a.smali
+smali_classes34/me/tigrik/f/b.smali
+smali_classes34/me/tigrik/f/c.smali
+smali_classes34/me/tigrik/f/d.smali
+smali_classes34/me/tigrik/f/e.smali
+smali_classes34/me/tigrik/f/f.smali
+smali_classes34/me/tigrik/f/g.smali
+smali_classes34/me/tigrik/f/h.smali
+smali_classes34/me/tigrik/f/i.smali
+smali_classes34/me/tigrik/f/j.smali
+
+## Paquete tigrik0 (Native Integration)
+
+### Clase Principal
+smali_classes34/tigrik0/tigrik.smali
+
+### Clases Hidden (Native Bridge)
+smali_classes34/tigrik0/hidden/Hidden0.smali
+smali_classes34/tigrik0/hidden/Hidden1.smali
+smali_classes34/tigrik0/hidden/Hidden2.smali
+
+## Notas
+
+- Total de clases nuevas: ~40 archivos smali
+- Paquete principal: me.tigrik (sistema de crashes)
+- Paquete nativo: tigrik0 (integración con libtigrik.so)
+- Estas clases deben copiarse al directorio smali_classes34/ de la app original
+- Requieren la biblioteca nativa libtigrik.so para funcionar correctamente
+
+## Obtener archivos completos
+
+Los archivos smali completos se obtienen ejecutando:
+```bash
+bash scripts/extract_patches.sh com_zhiliaoapp_musically_3 tiktok_patches
+```
+
+Esto extraerá todos los archivos a tiktok_patches/smali_classes34/
