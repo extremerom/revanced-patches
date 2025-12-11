@@ -13,10 +13,6 @@ internal val feedApiServiceLIZFingerprint = fingerprint {
 internal val followFeedFingerprint = fingerprint {
     accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("Lcom/ss/android/ugc/aweme/follow/presenter/FollowFeedList;")
-    strings("getFollowFeedList")
-    opcodes(
-        Opcode.INVOKE_INTERFACE_RANGE,
-        Opcode.MOVE_RESULT_OBJECT,
-        Opcode.INVOKE_INTERFACE
-    )
+    // Removed string requirement as it no longer exists in version 43.0.2
+    // Method will be matched by signature and return type only
 }
