@@ -35,7 +35,9 @@ internal val downloadUriFingerprint = fingerprint {
     returns("Landroid/net/Uri;")
     parameters(
         "Landroid/content/Context;",
-        "Ljava/lang/String;"
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
+        "Ljava/lang/Boolean;"
     )
     strings(
         "/",

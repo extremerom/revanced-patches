@@ -18,8 +18,8 @@ val playbackSpeedPatch = bytecodePatch(
         "retains the speed configurations in between videos.",
 ) {
     compatibleWith(
-        "com.ss.android.ugc.trill"("36.5.4"),
-        "com.zhiliaoapp.musically"("36.5.4"),
+        "com.ss.android.ugc.trill"("43.0.2"),
+        "com.zhiliaoapp.musically"("43.0.2"),
     )
 
     execute {
@@ -41,19 +41,27 @@ val playbackSpeedPatch = bytecodePatch(
             onRenderFirstFrameFingerprint.method.addInstructions(
                 0,
                 """
-                    # Video playback location (e.g. home page, following page or search result page) retrieved using getEnterFrom method.
-                    const/4 v0, 0x1
-                    invoke-virtual { p0, v0 },  ${getEnterFromFingerprint.originalMethod}
-                    move-result-object v0
-    
                     # Model of current video retrieved using getCurrentAweme method.
                     invoke-virtual { p0 }, Lcom/ss/android/ugc/aweme/feed/panel/BaseListFragmentPanel;->getCurrentAweme()Lcom/ss/android/ugc/aweme/feed/model/Aweme;
+                    move-result-object v0
+                    
+                    # Video playback location (e.g. home page, following page or search result page) retrieved using getEnterFrom method.
+                    const/4 v1, 0x1
+                    invoke-virtual { p0, v1 },  ${getEnterFromFingerprint.originalMethod}
                     move-result-object v1
     
                     # Desired playback speed retrieved using getPlaybackSpeed method.
                     invoke-static { }, Lapp/revanced/extension/tiktok/speed/PlaybackSpeedPatch;->getPlaybackSpeed()F
                     move-result v2
-                    invoke-static { v0, v1, v2 }, ${onVideoSwiped.originalMethod}
+                    
+                    # Get current timestamp
+                    invoke-static { }, Ljava/lang/System;->currentTimeMillis()J
+                    move-result-wide v3
+                    
+                    # Null string for last parameter
+                    const/4 v5, 0x0
+                    
+                    invoke-static/range { v0 .. v5 }, ${onVideoSwiped.originalMethod}
                 """,
             )
 

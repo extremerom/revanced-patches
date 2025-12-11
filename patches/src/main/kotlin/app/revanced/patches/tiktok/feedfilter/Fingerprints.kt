@@ -13,10 +13,5 @@ internal val feedApiServiceLIZFingerprint = fingerprint {
 internal val followFeedFingerprint = fingerprint {
     accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("Lcom/ss/android/ugc/aweme/follow/presenter/FollowFeedList;")
-    strings("getFollowFeedList")
-    opcodes(
-        Opcode.INVOKE_INTERFACE_RANGE,
-        Opcode.MOVE_RESULT_OBJECT,
-        Opcode.INVOKE_INTERFACE
-    )
+    strings("scene", "redDotState")
 }
