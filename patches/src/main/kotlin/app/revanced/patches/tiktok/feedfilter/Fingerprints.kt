@@ -13,10 +13,9 @@ internal val feedApiServiceLIZFingerprint = fingerprint {
 internal val followFeedFingerprint = fingerprint {
     accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("Lcom/ss/android/ugc/aweme/follow/presenter/FollowFeedList;")
-    strings("getFollowFeedList")
-    opcodes(
-        Opcode.INVOKE_INTERFACE_RANGE,
-        Opcode.MOVE_RESULT_OBJECT,
-        Opcode.INVOKE_INTERFACE
-    )
+    // Match the LIZ method in X/0SIV that takes scene and redDotState parameters
+    custom { method, _ ->
+        method.parameterTypes.size == 2 &&
+        method.returnType == "Lcom/ss/android/ugc/aweme/follow/presenter/FollowFeedList;"
+    }
 }

@@ -33,14 +33,16 @@ internal val aclCommonShare3Fingerprint = fingerprint {
 internal val downloadUriFingerprint = fingerprint {
     accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("Landroid/net/Uri;")
-    parameters(
-        "Landroid/content/Context;",
-        "Ljava/lang/String;"
-    )
     strings(
         "/",
         "/Camera",
         "/Camera/",
         "video/mp4"
     )
+    // Updated for v43.0.2 - method now has 3 parameters instead of 2
+    custom { method, _ ->
+        method.parameterTypes.size >= 2 &&
+        method.parameterTypes[0] == "Landroid/content/Context;" &&
+        method.parameterTypes[1] == "Ljava/lang/String;"
+    }
 }
