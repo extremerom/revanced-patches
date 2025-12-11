@@ -26,8 +26,8 @@ val sanitizeShareUrlsPatch = bytecodePatch(
     dependsOn(sharedExtensionPatch)
 
     compatibleWith(
-        "com.ss.android.ugc.trill"("36.5.4"),
-        "com.zhiliaoapp.musically"("36.5.4"),
+        "com.ss.android.ugc.trill"("43.0.2"),
+        "com.zhiliaoapp.musically"("43.0.2"),
     )
 
     execute {
@@ -66,10 +66,9 @@ val sanitizeShareUrlsPatch = bytecodePatch(
                     move-result v$wrapperRegister
                     if-eqz v$wrapperRegister, :skip_sanitization
 
-                    invoke-static { p1 }, $EXTENSION_CLASS_DESCRIPTOR->sanitizeShareUrl(Ljava/lang/String;)Ljava/lang/String;
+                    invoke-static { p0 }, $EXTENSION_CLASS_DESCRIPTOR->sanitizeShareUrl(Ljava/lang/String;)Ljava/lang/String;
                     move-result-object v$urlRegister
 
-                    # Wrap sanitized URL and return early to bypass ShareExtService
                     new-instance v$wrapperRegister, $observableWrapperClass
                     invoke-direct { v$wrapperRegister, v$urlRegister }, $observableWrapperClass-><init>(Ljava/lang/String;)V
                     invoke-static { v$wrapperRegister }, $observableFactoryClass->LJ($observableInterfaceType)$observableReturnType
