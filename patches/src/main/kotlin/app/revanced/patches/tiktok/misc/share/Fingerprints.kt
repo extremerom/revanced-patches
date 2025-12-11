@@ -5,21 +5,24 @@ import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
 
 internal val urlShorteningFingerprint = fingerprint {
-    accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL)
+    accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("LX/")
+    // Method signature changed in v43.0.2 from (I,String,String,String) to (String,String,String,I,I)
+    // and method name changed from LIZLLL to LIZ
     parameters(
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
         "I",
-        "Ljava/lang/String;",
-        "Ljava/lang/String;",
-        "Ljava/lang/String;"
+        "I"
     )
     opcodes(Opcode.RETURN_OBJECT)
 
-    // Same Kotlin intrinsics literal on both variants.
-    strings("getShortShareUrlObservab\u2026ongUrl, subBizSceneValue)")
+    // Same Kotlin intrinsics literal on both variants, but truncated in newer version
+    strings("getShortShareUrlObservable(...)")
 
     custom { method, _ ->
-        // LIZLLL is obfuscated by ProGuard/R8, but stable across both TikTok and Musically.
-        method.name == "LIZLLL"
+        // Method name changed from LIZLLL to LIZ in v43.0.2
+        method.name == "LIZ"
     }
 }
