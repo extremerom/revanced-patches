@@ -121,6 +121,7 @@ gradle-app.setting
 
 # Dependency directories
 node_modules/
+tiktok/ 
 
 # Gradle properties, due to Github token
 ./gradle.properties
