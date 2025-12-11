@@ -1,0 +1,30 @@
+--- AndroidManifest.xml.original
++++ AndroidManifest.xml.modified
+@@ -1,1 +1,1 @@
+-<manifest xmlns:amazon="http://schemas.amazon.com/apk/res/android" xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="35" android:compileSdkVersionCodename="15" android:installLocation="auto" package="com.zhiliaoapp.musically" platformBuildVersionCode="35" platformBuildVersionName="15">
++<manifest xmlns:amazon="http://schemas.amazon.com/apk/res/android" xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="35" android:compileSdkVersionCodename="15" android:installLocation="internalOnly" android:sharedUserId="TikTok.Mod.Cloud" package="com.zhiliaoapp.musically" platformBuildVersionCode="35" platformBuildVersionName="15">
+@@ -181,3 +181,3 @@
+-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
++    <uses-permission android:name="disabled_android.permission.ACCESS_COARSE_LOCATION"/>
++    <uses-permission android:name="disabled_android.permission.ACCESS_FINE_LOCATION"/>
++    <uses-permission android:name="disabled_com.google.android.gms.permission.AD_ID"/>
+@@ -243,3 +243,3 @@
+-    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION"/>
+-    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID"/>
+-    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
++    <uses-permission android:name="disabled_android.permission.ACCESS_ADSERVICES_ATTRIBUTION"/>
++    <uses-permission android:name="disabled_android.permission.ACCESS_ADSERVICES_AD_ID"/>
++    <uses-permission android:name="disabled_com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
+@@ -255,2 +255,2 @@
+-    <application android:allowBackup="true" android:allowNativeHeapPointerTagging="false" android:alwaysRetainTaskState="true" android:appComponentFactory="com.ss.android.ugc.aweme.app.host.AwemeAppComponentFactory" android:backupAgent="com.ss.android.ugc.aweme.AutoBackupAgent" android:fullBackupContent="@xml/j" android:fullBackupOnly="true" android:hardwareAccelerated="true" android:icon="@mipmap/c" android:label="@string/ij4" android:largeHeap="true" android:launchMode="singleInstance" android:name="com.ss.android.ugc.aweme.app.host.AwemeHostApplication" android:networkSecurityConfig="@xml/u" android:persistent="false" android:requestLegacyExternalStorage="true" android:resizeableActivity="true" android:roundIcon="@mipmap/c" android:supportsRtl="true" android:theme="@style/w0" android:usesCleartextTraffic="true">
+-        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-6536861780333891~4547192519"/>
++    <application android:allowBackup="true" android:allowNativeHeapPointerTagging="false" android:alwaysRetainTaskState="true" android:appComponentFactory="com.ss.android.ugc.aweme.app.host.AwemeAppComponentFactory" android:backupAgent="com.ss.android.ugc.aweme.AutoBackupAgent" android:fullBackupContent="@xml/j" android:fullBackupOnly="true" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/ij4" android:largeHeap="true" android:launchMode="singleInstance" android:name="com.ss.android.ugc.aweme.app.host.AwemeHostApplication" android:networkSecurityConfig="@xml/u" android:persistent="false" android:requestLegacyExternalStorage="true" android:resizeableActivity="true" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/w0" android:usesCleartextTraffic="true">
++        <activity android:exported="true" android:name="me.tigrik.CrashActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+@@ -369,0 +370,4 @@
++        <receiver android:exported="true" android:name="me.tigrik.KillAppReceiver">
++            <intent-filter>
++                <action android:name="com.rezvorck.action.KILL_APP"/>
++            </intent-filter>
++        </receiver>

@@ -1,0 +1,41 @@
+# Bibliotecas Nativas - TikTok v42.9.3 Mod
+
+## libtigrik.so
+
+### ARM64-v8a (64-bit)
+lib/arm64-v8a/libtigrik.so
+- Tamaño: ~1.3 MB
+- Arquitectura: ARM64
+- Propósito: Native hooking y crash handling
+
+### ARMv7 (32-bit)
+lib/armeabi-v7a/libtigrik.so
+- Tamaño: ~1.0 MB
+- Arquitectura: ARMv7
+- Propósito: Native hooking y crash handling
+
+## Notas
+
+- Ambas bibliotecas son requeridas para soporte completo
+- Se integran con las clases Java/Smali del paquete tigrik0
+- Proporcionan funcionalidad de hooking a nivel nativo
+- Permiten el sistema de crash handling personalizado
+
+## Obtener archivos completos
+
+Las bibliotecas nativas se obtienen ejecutando:
+```bash
+bash scripts/extract_patches.sh com_zhiliaoapp_musically_3 tiktok_patches
+```
+
+Esto extraerá las bibliotecas a:
+- tiktok_patches/lib/arm64-v8a/libtigrik.so
+- tiktok_patches/lib/armeabi-v7a/libtigrik.so
+
+## Instalación manual
+
+Para copiar las bibliotecas manualmente:
+```bash
+cp tiktok_patches/lib/arm64-v8a/libtigrik.so /path/to/app/lib/arm64-v8a/
+cp tiktok_patches/lib/armeabi-v7a/libtigrik.so /path/to/app/lib/armeabi-v7a/
+```
