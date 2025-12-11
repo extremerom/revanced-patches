@@ -40,40 +40,52 @@ val settingsPatch = bytecodePatch(
 
         fun String.toClassName(): String = substring(1, this.length - 1).replace("/", ".")
 
-        // Find the class name of classes which construct a settings entry
-        val settingsButtonClass = settingsEntryFingerprint.originalClassDef.type.toClassName()
-        val settingsButtonInfoClass = settingsEntryInfoFingerprint.originalClassDef.type.toClassName()
+        // Try to add settings entry to main menu (may fail in newer versions)
+        // In TikTok 43.0.2+, the settings UI was completely redesigned using Jetpack Compose
+        // and the old Fragment-based system no longer exists.
+        try {
+            // Find the class name of classes which construct a settings entry
+            val settingsButtonClass = settingsEntryFingerprint.originalClassDef.type.toClassName()
+            val settingsButtonInfoClass = settingsEntryInfoFingerprint.originalClassDef.type.toClassName()
 
-        // Create a settings entry for 'revanced settings' and add it to settings fragment
-        addSettingsEntryFingerprint.method.apply {
-            val markIndex = implementation!!.instructions.indexOfFirst {
-                it.opcode == Opcode.IGET_OBJECT && ((it as Instruction22c).reference as FieldReference).name == "headerUnit"
+            // Create a settings entry for 'revanced settings' and add it to settings fragment
+            addSettingsEntryFingerprint.method.apply {
+                val markIndex = implementation!!.instructions.indexOfFirst {
+                    it.opcode == Opcode.IGET_OBJECT && ((it as Instruction22c).reference as FieldReference).name == "headerUnit"
+                }
+
+                val getUnitManager = getInstruction(markIndex + 2)
+                val addEntry = getInstruction(markIndex + 1)
+
+                addInstructions(
+                    markIndex + 2,
+                    listOf(
+                        getUnitManager,
+                        addEntry,
+                    ),
+                )
+
+                addInstructions(
+                    markIndex + 2,
+                    """
+                        const-string v0, "$settingsButtonClass"
+                        const-string v1, "$settingsButtonInfoClass"
+                        invoke-static {v0, v1}, $createSettingsEntryMethodDescriptor
+                        move-result-object v0
+                        check-cast v0, ${settingsEntryFingerprint.originalClassDef.type}
+                    """,
+                )
             }
-
-            val getUnitManager = getInstruction(markIndex + 2)
-            val addEntry = getInstruction(markIndex + 1)
-
-            addInstructions(
-                markIndex + 2,
-                listOf(
-                    getUnitManager,
-                    addEntry,
-                ),
-            )
-
-            addInstructions(
-                markIndex + 2,
-                """
-                    const-string v0, "$settingsButtonClass"
-                    const-string v1, "$settingsButtonInfoClass"
-                    invoke-static {v0, v1}, $createSettingsEntryMethodDescriptor
-                    move-result-object v0
-                    check-cast v0, ${settingsEntryFingerprint.originalClassDef.type}
-                """,
-            )
+        } catch (e: Exception) {
+            // Settings menu entry injection failed (expected in TikTok 43.0.2+)
+            // Settings can still be accessed by opening the AdPersonalization activity directly
+            // or through the extension's alternative entry points
+            println("WARNING: Could not add ReVanced settings entry to main menu: ${e.message}")
+            println("Settings will be accessible by hijacking AdPersonalization activity")
         }
 
-        // Initialize the settings menu once the replaced setting entry is clicked.
+        // Initialize the settings menu when AdPersonalizationActivity is opened
+        // This works by hijacking the "Ads" personalization page to show ReVanced settings instead
         adPersonalizationActivityOnCreateFingerprint.method.apply {
             val initializeSettingsIndex = implementation!!.instructions.indexOfFirst {
                 it.opcode == Opcode.INVOKE_SUPER
