@@ -18,8 +18,8 @@ val playbackSpeedPatch = bytecodePatch(
         "retains the speed configurations in between videos.",
 ) {
     compatibleWith(
-        "com.ss.android.ugc.trill"("36.5.4"),
-        "com.zhiliaoapp.musically"("36.5.4"),
+        "com.ss.android.ugc.trill"("43.0.2"),
+        "com.zhiliaoapp.musically"("43.0.2"),
     )
 
     execute {
@@ -53,7 +53,10 @@ val playbackSpeedPatch = bytecodePatch(
                     # Desired playback speed retrieved using getPlaybackSpeed method.
                     invoke-static { }, Lapp/revanced/extension/tiktok/speed/PlaybackSpeedPatch;->getPlaybackSpeed()F
                     move-result v2
-                    invoke-static { v0, v1, v2 }, ${onVideoSwiped.originalMethod}
+                    
+                    # Empty string for the 4th parameter (event type)
+                    const-string v3, ""
+                    invoke-static { v0, v1, v2, v3 }, ${onVideoSwiped.originalMethod}
                 """,
             )
 
