@@ -42,10 +42,8 @@ fi
 
 # 3. Lista de archivos nuevos
 echo "3. Listando archivos nuevos..."
-cd "$MODIFIED_APP"
-find . -name "*.smali" | sort > /tmp/mod_files.txt
-cd "$ORIGINAL_APP"
-find . -name "*.smali" | sort > /tmp/orig_files.txt
+(cd "$MODIFIED_APP" && find . -name "*.smali" | sort) > /tmp/mod_files.txt
+(cd "$ORIGINAL_APP" && find . -name "*.smali" | sort) > /tmp/orig_files.txt
 comm -23 /tmp/mod_files.txt /tmp/orig_files.txt > "$OUTPUT_DIR/new_files.txt"
 NEW_COUNT=$(wc -l < "$OUTPUT_DIR/new_files.txt")
 echo "   ✓ $NEW_COUNT archivos nuevos listados"
@@ -62,7 +60,7 @@ echo "5. Generando diffs de muestra..."
 # Feed classes
 mkdir -p "$OUTPUT_DIR/samples/feed"
 FEED_SAMPLE=0
-for file in $(cd "$ORIGINAL_APP" && find ./smali*/com/ss/android/ugc/aweme/feed -name "*.smali" | head -10); do
+for file in $((cd "$ORIGINAL_APP" && find ./smali*/com/ss/android/ugc/aweme/feed -name "*.smali" 2>/dev/null) | head -10); do
     if [ -f "$MODIFIED_APP/$file" ]; then
         basename_file=$(basename "$file")
         diff -u "$ORIGINAL_APP/$file" "$MODIFIED_APP/$file" > "$OUTPUT_DIR/samples/feed/${basename_file}.diff" 2>&1
