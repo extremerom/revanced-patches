@@ -12,6 +12,11 @@ internal val getSpeedFingerprint = fingerprint {
 internal val setSpeedFingerprint = fingerprint {
     accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("V")
-    parameters("Ljava/lang/String;", "Lcom/ss/android/ugc/aweme/feed/model/Aweme;", "F")
+    parameters(
+        "Ljava/lang/String;",
+        "Lcom/ss/android/ugc/aweme/feed/model/Aweme;",
+        "F",
+        "Ljava/lang/String;" // Additional parameter added in version 43.0.2
+    )
     strings("enterFrom")
 }

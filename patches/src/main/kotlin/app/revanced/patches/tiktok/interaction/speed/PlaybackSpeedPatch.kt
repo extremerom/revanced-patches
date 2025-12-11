@@ -53,7 +53,11 @@ val playbackSpeedPatch = bytecodePatch(
                     # Desired playback speed retrieved using getPlaybackSpeed method.
                     invoke-static { }, Lapp/revanced/extension/tiktok/speed/PlaybackSpeedPatch;->getPlaybackSpeed()F
                     move-result v2
-                    invoke-static { v0, v1, v2 }, ${onVideoSwiped.originalMethod}
+                    
+                    # Empty string for additional parameter in version 43.0.2+
+                    const-string v3, ""
+                    
+                    invoke-static { v0, v1, v2, v3 }, ${onVideoSwiped.originalMethod}
                 """,
             )
 
