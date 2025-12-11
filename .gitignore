@@ -121,7 +121,11 @@ gradle-app.setting
 
 # Dependency directories
 node_modules/
-tiktok/ 
+tiktok/
+
+# Cloned TikTok app directories for analysis
+com_zhiliaoapp_musically_3/
+com_zhiliaoapp_musically_4/ 
 
 # Gradle properties, due to Github token
 ./gradle.properties
