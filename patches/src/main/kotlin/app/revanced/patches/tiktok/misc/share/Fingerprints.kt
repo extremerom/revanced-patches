@@ -15,8 +15,8 @@ internal val urlShorteningFingerprint = fingerprint {
     )
     opcodes(Opcode.RETURN_OBJECT)
 
-    // Same Kotlin intrinsics literal on both variants.
-    strings("getShortShareUrlObservab\u2026ongUrl, subBizSceneValue)")
+    // Kotlin intrinsics literal
+    strings("getShortShareUrlObservable(...)")
 
     custom { method, _ ->
         // LIZLLL is obfuscated by ProGuard/R8, but stable across both TikTok and Musically.
