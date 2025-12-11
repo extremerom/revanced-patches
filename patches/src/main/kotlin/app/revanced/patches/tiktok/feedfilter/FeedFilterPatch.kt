@@ -23,8 +23,8 @@ val feedFilterPatch = bytecodePatch(
     )
 
     compatibleWith(
-        "com.ss.android.ugc.trill"("36.5.4"),
-        "com.zhiliaoapp.musically"("36.5.4"),
+        "com.ss.android.ugc.trill"("36.5.4"..),
+        "com.zhiliaoapp.musically"("36.5.4"..),
     )
 
     execute {
