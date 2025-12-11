@@ -8,17 +8,10 @@ internal val getEnterFromFingerprint = fingerprint {
     returns("Ljava/lang/String;")
     accessFlags(AccessFlags.PUBLIC, AccessFlags.FINAL)
     parameters("Z")
-    opcodes(
-        Opcode.INVOKE_VIRTUAL,
-        Opcode.MOVE_RESULT,
-        Opcode.INVOKE_VIRTUAL,
-        Opcode.MOVE_RESULT_OBJECT,
-        Opcode.INVOKE_STATIC,
-        Opcode.MOVE_RESULT_OBJECT,
-        Opcode.RETURN_OBJECT,
-    )
     custom { methodDef, _ ->
-        methodDef.definingClass.endsWith("/BaseListFragmentPanel;")
+        // In TikTok 43.0.2, this method is obfuscated as "K5"
+        methodDef.definingClass.endsWith("/BaseListFragmentPanel;") &&
+            methodDef.name == "K5"
     }
 }
 
