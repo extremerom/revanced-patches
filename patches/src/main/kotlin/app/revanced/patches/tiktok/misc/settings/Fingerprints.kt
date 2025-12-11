@@ -20,17 +20,16 @@ internal val adPersonalizationActivityOnCreateFingerprint = fingerprint {
     }
 }
 
-// These fingerprints are kept for potential future use
+// These fingerprints use string matching to avoid fragile obfuscated class name dependencies
 internal val settingsEntryFingerprint = fingerprint {
-    custom { method, classDef ->
-        classDef.type == "LX/0RxF;"
-    }
+    strings("pls pass item or extends the EventUnit")
 }
 
 internal val settingsEntryInfoFingerprint = fingerprint {
-    custom { method, classDef ->
-        classDef.type == "LX/0uSw;"
-    }
+    strings(
+        "ExposeItem(title=",
+        ", icon=",
+    )
 }
 
 internal val settingsStatusLoadFingerprint = fingerprint {
