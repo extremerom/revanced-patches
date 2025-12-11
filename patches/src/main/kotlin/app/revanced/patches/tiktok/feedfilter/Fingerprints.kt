@@ -13,10 +13,11 @@ internal val feedApiServiceLIZFingerprint = fingerprint {
 internal val followFeedFingerprint = fingerprint {
     accessFlags(AccessFlags.PUBLIC, AccessFlags.STATIC)
     returns("Lcom/ss/android/ugc/aweme/follow/presenter/FollowFeedList;")
-    strings("getFollowFeedList")
-    opcodes(
-        Opcode.INVOKE_INTERFACE_RANGE,
-        Opcode.MOVE_RESULT_OBJECT,
-        Opcode.INVOKE_INTERFACE
-    )
+    // Updated: Method signature changed in v43.0.2
+    // Looking for static methods in X/ obfuscated classes that return FollowFeedList
+    custom { method, classDef ->
+        classDef.type.startsWith("LX/") &&
+        method.returnType == "Lcom/ss/android/ugc/aweme/follow/presenter/FollowFeedList;" &&
+        (method.parameterTypes.size == 2 || method.parameterTypes.size == 0)
+    }
 }

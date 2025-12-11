@@ -4,8 +4,11 @@ import app.revanced.patcher.fingerprint
 
 internal val addSettingsEntryFingerprint = fingerprint {
     custom { method, classDef ->
-        classDef.endsWith("/SettingNewVersionFragment;") &&
-            method.name == "initUnitManger"
+        // Updated: Settings fragment structure has changed in v43.0.2
+        // Looking for any settings-related fragment with initialization methods
+        classDef.type.contains("/setting/") &&
+            classDef.type.contains("Fragment") &&
+            method.name.contains("init")
     }
 }
 
@@ -17,14 +20,24 @@ internal val adPersonalizationActivityOnCreateFingerprint = fingerprint {
 }
 
 internal val settingsEntryFingerprint = fingerprint {
-    strings("pls pass item or extends the EventUnit")
+    custom { method, classDef ->
+        // Updated: Found in LX/0RxF; in v43.0.2
+        classDef.type == "LX/0RxF;" &&
+        method.implementation?.instructions?.any {
+            it.toString().contains("pls pass item or extends the EventUnit")
+        } == true
+    }
 }
 
 internal val settingsEntryInfoFingerprint = fingerprint {
-    strings(
-        "ExposeItem(title=",
-        ", icon=",
-    )
+    custom { method, classDef ->
+        // Updated: Found in LX/0uSw; in v43.0.2
+        classDef.type == "LX/0uSw;" &&
+        method.implementation?.instructions?.any {
+            val str = it.toString()
+            str.contains("ExposeItem(title=") && str.contains(", icon=")
+        } == true
+    }
 }
 
 internal val settingsStatusLoadFingerprint = fingerprint {
